@@ -1,0 +1,42 @@
+name: Relatório mensal
+
+on:
+  schedule:
+    - cron: "0 11 2 * *"      # dia 2 de cada mês, 08:00 em Brasília
+  workflow_dispatch:
+    inputs:
+      mes:
+        description: "Mês de referência (AAAA-MM). Vazio = último mês com dados"
+        required: false
+      enviar:
+        description: "Enviar o e-mail por SMTP"
+        type: boolean
+        default: false
+
+jobs:
+  relatorio:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: pytest -q
+      - name: Gerar relatório
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+        run: |
+          ARGS=""
+          if [ -n "${{ inputs.mes }}" ]; then ARGS="$ARGS --mes ${{ inputs.mes }}"; fi
+          if [ "${{ inputs.enviar }}" = "true" ]; then ARGS="$ARGS --enviar"; fi
+          python -m relatorio $ARGS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-producao-comercial
+          path: saida/
+          retention-days: 90

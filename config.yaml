@@ -1,0 +1,20 @@
+# Configuração do relatório mensal de produção comercial
+
+dados:
+  producao_x_meta: dados/producao_x_meta.parquet   # MARTS.PRODUCAO_X_META (Snowflake → Parquet)
+  gerentes: dados/gerentes_mensal.parquet          # MARTS.GERENTES_MENSAL
+
+saida: saida
+
+alertas:
+  atingimento_minimo: 0.90      # agência abaixo de 90% da meta no acumulado do ano entra no alerta
+  queda_maxima_aa: -0.05        # ou com queda maior que 5% contra o mesmo mês do ano anterior
+
+email:
+  remetente: relatorios@bancohorizonte.example
+  destinatarios:
+    - superintendencia.comercial@bancohorizonte.example
+  copia:
+    - planejamento@bancohorizonte.example
+  assunto: "Produção comercial · {mes_extenso} · {atingimento} da meta"
+  # credenciais via variáveis de ambiente: SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD
