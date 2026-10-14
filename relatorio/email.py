@@ -13,7 +13,8 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from .indicadores import Relatorio, brl, pct, sinal
 
 TEMPLATES = Path(__file__).resolve().parents[1] / "templates"
-COR_STATUS = {"bom": "#0ca30c", "atencao": "#c98a00", "critico": "#d03b3b"}
+# só o problema ganha cor; acima da meta fica em tinta, entre 90% e 100% em cinza
+COR_STATUS = {"bom": "#17201c", "atencao": "#a7b0ab", "critico": "#c23a22"}
 
 
 def _status(a: float) -> tuple[str, str]:
@@ -30,7 +31,7 @@ def montar_html(r: Relatorio, assunto: str, anexo: str) -> str:
     kpis = [
         {"rotulo": "Produção no mês", "valor": brl(m.producao),
          "detalhe": f"{sinal(var)} vs. mesmo mês de {r.mes.year - 1}" if var is not None else "sem comparativo",
-         "cor": "#006300" if (var or 0) >= 0 else "#b42f2f"},
+         "cor": "#2c6e49" if (var or 0) >= 0 else "#b2331d"},
         {"rotulo": "Atingimento no mês", "valor": pct(m.atingimento), "detalhe": f"meta de {brl(m.meta)}", "cor": _status(m.atingimento)[0]},
         {"rotulo": "Acumulado do ano", "valor": brl(a.producao), "detalhe": f"{pct(a.atingimento)} da meta", "cor": _status(a.atingimento)[0]},
     ]
@@ -41,7 +42,7 @@ def montar_html(r: Relatorio, assunto: str, anexo: str) -> str:
         regionais.append({"regional": g.regional, "atingimento": pct(g.atingimento_ano), "cor": cor, "icone": icone,
                           "largura": max(2, round(g.atingimento_ano / maximo * 100))})
     alertas = [{"agencia": x.agencia, "regional": x.regional, "atingimento": pct(x.atingimento_ano),
-                "variacao": sinal(x.variacao_aa), "cor_var": "#b42f2f" if (x.variacao_aa or 0) < 0 else "#52514e"}
+                "variacao": sinal(x.variacao_aa), "cor_var": "#b2331d" if (x.variacao_aa or 0) < 0 else "#4b5651"}
                for x in r.alertas.head(8).itertuples()]
     env = Environment(loader=FileSystemLoader(TEMPLATES), autoescape=select_autoescape(["html", "j2"]))
     return env.get_template("email.html.j2").render(

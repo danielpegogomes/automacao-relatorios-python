@@ -5,25 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ assunto }}</title>
 </head>
-<body style="margin:0;padding:0;background:#f4f5f2;font-family:Segoe UI,Arial,sans-serif;color:#0b0b0b;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f5f2;">
+<body style="margin:0;padding:0;background:#eef1ee;font-family:Helvetica,Arial,sans-serif;color:#17201c;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef1ee;">
 <tr><td align="center" style="padding:24px 12px;">
-<table role="presentation" width="640" cellpadding="0" cellspacing="0" style="max-width:640px;width:100%;background:#ffffff;border:1px solid #e6e5df;border-radius:14px;overflow:hidden;">
+<table role="presentation" width="640" cellpadding="0" cellspacing="0" style="max-width:640px;width:100%;background:#ffffff;border:1px solid #dde2df;">
 
-  <tr><td style="background:#104281;padding:22px 28px;">
-    <p style="margin:0;font-size:12px;color:#b7d3f6;letter-spacing:.02em;">BANCO HORIZONTE · SUPERINTENDÊNCIA COMERCIAL PF/PJ</p>
-    <p style="margin:6px 0 0;font-size:21px;font-weight:600;color:#ffffff;">Produção comercial · {{ r.mes_extenso }}</p>
+  <tr><td style="padding:24px 28px 16px;border-bottom:2px solid #17201c;">
+    <p style="margin:0;font-family:Consolas,'Courier New',monospace;font-size:11px;color:#4b5651;letter-spacing:.08em;">BANCO HORIZONTE · SUPERINTENDÊNCIA COMERCIAL PF/PJ</p>
+    <p style="margin:6px 0 0;font-size:24px;font-weight:800;color:#17201c;letter-spacing:-.02em;">Produção comercial · {{ r.mes_extenso }}</p>
   </td></tr>
 
   <tr><td style="padding:24px 28px 8px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
       <tr>
         {% for k in kpis %}
-        <td width="33%" valign="top" style="padding:0 {{ '8px' if not loop.last else '0' }} 0 0;">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f7f5;border-radius:10px;">
-            <tr><td style="padding:14px 14px 12px;">
-              <p style="margin:0;font-size:12px;color:#52514e;">{{ k.rotulo }}</p>
-              <p style="margin:4px 0 0;font-size:22px;font-weight:700;color:#0b0b0b;">{{ k.valor }}</p>
+        <td width="33%" valign="top" style="padding:0 0 0 {{ '0' if loop.first else '14px' }};{{ '' if loop.first else 'border-left:1px solid #dde2df;' }}">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+            <tr><td style="padding:2px 0 4px;">
+              <p style="margin:0;font-family:Consolas,'Courier New',monospace;font-size:11px;color:#4b5651;letter-spacing:.05em;text-transform:uppercase;">{{ k.rotulo }}</p>
+              <p style="margin:6px 0 0;font-size:24px;font-weight:800;color:#17201c;letter-spacing:-.02em;">{{ k.valor }}</p>
               <p style="margin:4px 0 0;font-size:12px;color:{{ k.cor }};">{{ k.detalhe }}</p>
             </td></tr>
           </table>
@@ -34,47 +34,47 @@
   </td></tr>
 
   <tr><td style="padding:16px 28px 4px;">
-    <p style="margin:0 0 8px;font-size:14px;font-weight:600;">Destaques</p>
+    <p style="margin:0 0 8px;font-family:Consolas,'Courier New',monospace;font-size:11px;color:#4b5651;letter-spacing:.08em;">DESTAQUES</p>
     {% for d in r.destaques %}
-    <p style="margin:0 0 6px;font-size:14px;line-height:1.5;color:#3b3a37;">• {{ d }}</p>
+    <p style="margin:0 0 6px;font-size:14px;line-height:1.5;color:#17201c;padding-left:10px;border-left:2px solid #1f3fc4;">{{ d }}</p>
     {% endfor %}
   </td></tr>
 
   <tr><td style="padding:18px 28px 4px;">
-    <p style="margin:0 0 10px;font-size:14px;font-weight:600;">Atingimento por regional <span style="font-weight:400;color:#6f6d68;font-size:12px;">acumulado do ano</span></p>
+    <p style="margin:0 0 10px;font-family:Consolas,'Courier New',monospace;font-size:11px;color:#4b5651;letter-spacing:.08em;">ATINGIMENTO POR REGIONAL · ACUMULADO DO ANO</p>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:13px;">
       {% for g in regionais %}
       <tr>
-        <td style="padding:6px 0;width:150px;color:#3b3a37;">{{ g.regional }}</td>
+        <td style="padding:6px 0;width:150px;color:#17201c;">{{ g.regional }}</td>
         <td style="padding:6px 10px;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-            <td style="background:{{ g.cor }};height:8px;border-radius:4px;width:{{ g.largura }}%;font-size:0;line-height:0;">&nbsp;</td>
-            <td style="background:#eef0f3;height:8px;font-size:0;line-height:0;">&nbsp;</td>
+            <td style="background:{{ g.cor }};height:10px;width:{{ g.largura }}%;font-size:0;line-height:0;">&nbsp;</td>
+            <td style="background:#e9ecea;height:10px;font-size:0;line-height:0;">&nbsp;</td>
           </tr></table>
         </td>
-        <td align="right" style="padding:6px 0;width:92px;white-space:nowrap;font-weight:600;"><span style="color:{{ g.cor }};">{{ g.icone }}</span> {{ g.atingimento }}</td>
+        <td align="right" style="padding:6px 0;width:92px;white-space:nowrap;font-family:Consolas,'Courier New',monospace;font-size:12.5px;"><span style="color:{{ g.cor }};">{{ g.icone }}</span> {{ g.atingimento }}</td>
       </tr>
       {% endfor %}
     </table>
-    <p style="margin:6px 0 0;font-size:11px;color:#6f6d68;">✓ acima da meta · ! entre 90% e 100% · ✕ abaixo de 90%</p>
+    <p style="margin:6px 0 0;font-family:Consolas,'Courier New',monospace;font-size:11px;color:#4b5651;">✓ acima da meta · ! entre 90% e 100% · ✕ abaixo de 90%</p>
   </td></tr>
 
   {% if alertas %}
   <tr><td style="padding:20px 28px 4px;">
-    <p style="margin:0 0 10px;font-size:14px;font-weight:600;">Agências em alerta <span style="font-weight:400;color:#6f6d68;font-size:12px;">{{ total_alertas }} no total{% if total_alertas > alertas|length %} · as {{ alertas|length }} mais críticas abaixo{% endif %}</span></p>
+    <p style="margin:0 0 10px;font-family:Consolas,'Courier New',monospace;font-size:11px;color:#4b5651;letter-spacing:.08em;">AGÊNCIAS EM ALERTA <span style="letter-spacing:0;">· {{ total_alertas }} no total{% if total_alertas > alertas|length %} · as {{ alertas|length }} mais críticas abaixo{% endif %}</span></p>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:13px;border-collapse:collapse;">
-      <tr style="color:#6f6d68;font-size:12px;">
-        <td style="padding:6px 0;border-bottom:1px solid #e6e5df;">Agência</td>
-        <td style="padding:6px 0;border-bottom:1px solid #e6e5df;">Regional</td>
-        <td align="right" style="padding:6px 0;border-bottom:1px solid #e6e5df;">No ano</td>
-        <td align="right" style="padding:6px 0;border-bottom:1px solid #e6e5df;">Var. a/a no mês</td>
+      <tr style="color:#4b5651;font-family:Consolas,'Courier New',monospace;font-size:11px;">
+        <td style="padding:6px 0;border-bottom:1px solid #17201c;">Agência</td>
+        <td style="padding:6px 0;border-bottom:1px solid #17201c;">Regional</td>
+        <td align="right" style="padding:6px 0;border-bottom:1px solid #17201c;">No ano</td>
+        <td align="right" style="padding:6px 0;border-bottom:1px solid #17201c;">Var. a/a no mês</td>
       </tr>
       {% for a in alertas %}
       <tr>
-        <td style="padding:8px 0;border-bottom:1px solid #f0efea;font-weight:600;">{{ a.agencia }}</td>
-        <td style="padding:8px 0;border-bottom:1px solid #f0efea;color:#52514e;">{{ a.regional }}</td>
-        <td align="right" style="padding:8px 0;border-bottom:1px solid #f0efea;color:#b42f2f;font-weight:600;">{{ a.atingimento }}</td>
-        <td align="right" style="padding:8px 0;border-bottom:1px solid #f0efea;color:{{ a.cor_var }};">{{ a.variacao }}</td>
+        <td style="padding:8px 0;border-bottom:1px solid #e9ecea;font-weight:600;">{{ a.agencia }}</td>
+        <td style="padding:8px 0;border-bottom:1px solid #e9ecea;color:#4b5651;">{{ a.regional }}</td>
+        <td align="right" style="padding:8px 0;border-bottom:1px solid #e9ecea;color:#b2331d;font-family:Consolas,'Courier New',monospace;">{{ a.atingimento }}</td>
+        <td align="right" style="padding:8px 0;border-bottom:1px solid #e9ecea;color:{{ a.cor_var }};font-family:Consolas,'Courier New',monospace;">{{ a.variacao }}</td>
       </tr>
       {% endfor %}
     </table>
@@ -82,12 +82,12 @@
   {% endif %}
 
   <tr><td style="padding:24px 28px 26px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f7f5;border-radius:10px;">
-      <tr><td style="padding:14px 16px;font-size:13px;color:#3b3a37;line-height:1.5;">
-        📎 <b>{{ anexo }}</b> em anexo, com as abas Resumo, Regionais, Produtos, Agências, Alertas e Gerentes.
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #dde2df;">
+      <tr><td style="padding:14px 0 0;font-size:13px;color:#17201c;line-height:1.5;">
+        Em anexo: <b>{{ anexo }}</b>, com as abas Resumo, Regionais, Produtos, Agências, Alertas e Gerentes.
       </td></tr>
     </table>
-    <p style="margin:16px 0 0;font-size:11px;color:#8a8882;line-height:1.5;">Relatório gerado automaticamente em {{ gerado_em }} a partir dos marts do Snowflake (MARTS.PRODUCAO_X_META). Dados fictícios.</p>
+    <p style="margin:16px 0 0;font-family:Consolas,'Courier New',monospace;font-size:10.5px;color:#7a847f;line-height:1.5;">Relatório gerado automaticamente em {{ gerado_em }} a partir dos marts do Snowflake (MARTS.PRODUCAO_X_META). Dados fictícios.</p>
   </td></tr>
 
 </table>
